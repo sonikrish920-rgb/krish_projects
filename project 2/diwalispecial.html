@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Diwali Web Page</title>
+</head>
+
+<body background="dimg.jpg" text="black">
+    <marquee behavior="scroll" scrollamount="21%">
+        <h1>Welcome to My Web Page</h1>
+    </marquee>
+    <h2>
+        <marquee direction="right" behavior="alternate" scrollamount="15%" bgcolor="grey">Happy Diwali</marquee>
+    </h2>
+    <h3><p>May this Diwali bring peace and prosperity to your life!<br>
+         Wishing you and your family a joyous and prosperous Diwali! <br>
+         May this Diwali brighten your life with happiness, health, and wealth.<br>
+         On this auspicious occasion of Diwali, may your life be filled with joy and success. </p><br></h3>
+    <hr color="red" width="100%" size="7" align="center">
+    <audio id="bgmusic" controls autoplay loop muted>
+        <source src="daudio.mp3" type="audio/mp3">
+
+    </audio>
+    <button onclick="unmute()">🔊 Unmute Music</button>
+    <script>
+    const audio = document.getElementById('bgmusic');
+    
+    function unmute() {
+      audio.muted = false;
+      audio.play();
+    }
+  </script>
+</body>
+
+</html>
