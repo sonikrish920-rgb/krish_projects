@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Signup</title><!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css">
+</head>
+<body><!-- LOGIN FORM -->
+<div class="card" id="login-form">
+    <h2>Login</h2>
+
+    <input type="text" placeholder="Email or Username" />
+    <input type="password" placeholder="Password" />
+
+    <div class="remember">
+        <input type="checkbox" /> Remember Me
+    </div>
+
+    <a href="#" style="color:#2575fc; font-size:14px;">Forgot Password?</a>
+
+    <button class="btn">Login</button>
+
+    <div class="form-footer">
+        <a href="#" onclick="showSignup()">Don't have an account? Sign up</a>
+    </div>
+</div>
+
+<!-- SIGNUP FORM -->
+<div class="card" id="signup-form">
+    <h2>Create Account</h2>
+
+    <input type="text" placeholder="Full Name" />
+    <input type="email" placeholder="Email Address" />
+    <input type="password" placeholder="Create Password" />
+    <input type="password" placeholder="Confirm Password" />
+
+    <button class="btn">Create Account</button>
+
+    <div class="form-footer">
+        <a href="#" onclick="showLogin()">Already have an account? Login here</a>
+    </div>
+</div>
+
+
+<script src="script.js"> </script>
+
+</body>
+</html>
