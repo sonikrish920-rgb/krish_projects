@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Notes Website</title>
+  <link rel="stylesheet" href="style.css">  
+</head>
+<body>
+
+<header>
+  <nav>
+    <h2>My Notes</h2>
+    <div>
+      <a href="#home">Home</a>
+      <a href="#notes">Notes</a>
+      <a href="#add">Add Note</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Personal Notes Website</h1>
+  <p>Simple • Responsive • Functional</p>
+</section>
+
+<section class="section" id="notes">
+  <h2>My Notes</h2>
+  <div class="notes-grid" id="notesContainer"></div>
+</section>
+
+<section class="section" id="add">
+  <h2>Add New Note</h2>
+  <form id="noteForm">
+    <input type="text" id="title" placeholder="Note Title" required />
+    <textarea id="content" placeholder="Note Content" required></textarea>
+    <button type="submit">Save Note</button>
+  </form>
+</section>
+
+<footer>
+  <p>© 2025 My Notes</p>
+</footer>
+<script src="note.js"></script>
+</body>
+</html>
