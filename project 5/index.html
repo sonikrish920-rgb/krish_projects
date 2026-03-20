@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Decision Helper</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Decision Helper</h1>
+    <p>Helping you make smarter choices with simple logic.</p>
+
+    <form id="decisionForm">
+      <input type="text" id="question" placeholder="What's your decision?" required />
+      <input type="text" id="optionA" placeholder="Option A" required />
+      <input type="text" id="optionB" placeholder="Option B" required />
+      <button type="submit">Evaluate</button>
+      <button type="button" id="resetBtn">Reset</button>
+    </form>
+
+    <div id="results" class="hidden">
+      <h2>Your Options</h2>
+      <p id="displayOptions"></p>
+
+      <div class="pros-cons">
+        <div>
+          <h3>Pros & Cons of Option A</h3>
+          <ul id="prosA"><li>Pro A1</li><li>Con A1</li></ul>
+        </div>
+        <div>
+          <h3>Pros & Cons of Option B</h3>
+          <ul id="prosB"><li>Pro B1</li><li>Con B1</li></ul>
+        </div>
+      </div>
+
+      <div class="questions">
+        <h3>Follow-up Questions</h3>
+        <label>Which is cheaper?
+          <select id="q1"><option value="">Select</option><option value="A">A</option><option value="B">B</option></select>
+        </label>
+        <label>Which saves more time?
+          <select id="q2"><option value="">Select</option><option value="A">A</option><option value="B">B</option></select>
+        </label>
+        <label>Which feels better?
+          <select id="q3"><option value="">Select</option><option value="A">A</option><option value="B">B</option></select>
+        </label>
+        <button id="scoreBtn">Calculate Score</button>
+      </div>
+
+      <div id="finalResult" class="highlight hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </div>
+</body>
+</html>
