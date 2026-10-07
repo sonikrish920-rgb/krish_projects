@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="cal.css" />
-  </head>
-  <body>
-    <div class="calculator">
-      <h1>Calculator</h1>
-      <div>
-        <div id="display">0</div>
-        <div class="buttons">
-          <button type="button" class="btn clear">AC</button>
-          <button type="button" class="btn delete">⌫</button>
-          <button type="button" class="btn operator">+/-</button>
-          <button type="button" class="btn operator">÷</button>
-        </div>
-        <div class="buttons">
-          <button type="button" class="btn number">7</button>
-          <button type="button" class="btn number">8</button>
-          <button type="button" class="btn number">9</button>
-          <button type="button" class="btn operator">×</button>
-        </div>
-        <div class="buttons">
-          <button type="button" class="btn number">4</button>
-          <button type="button" class="btn number">5</button>
-          <button type="button" class="btn number">6</button>
-          <button type="button" class="btn operator">+</button>
-        </div>
-        <div class="buttons">
-          <button type="button" class="btn number">1</button>
-          <button type="button" class="btn number">2</button>
-          <button type="button" class="btn number">3</button>
-          <button type="button" class="btn operator">-</button>
-        </div>
-        <div class="buttons">
-          <button type="button" class="btn number">00</button>
-          <button type="button" class="btn number">0</button>
-          <button type="button" class="btn number">.</button>
-          <button type="button" class="btn equals">=</button>
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+  <main class="calculator">
+    <h1>Calculator</h1>
+    <output id="display" aria-live="polite" aria-atomic="true">0</output>
+    <div class="buttons">
+      <button type="button" class="btn clear" data-action="clear">AC</button>
+      <button type="button" class="btn delete" data-action="delete" aria-label="Delete last digit">DEL</button>
+      <button type="button" class="btn operator" data-action="sign" aria-label="Toggle sign">+/-</button>
+      <button type="button" class="btn operator" data-action="operator" data-value="/" aria-label="Divide">/</button>
+      <button type="button" class="btn number" data-action="number" data-value="7">7</button>
+      <button type="button" class="btn number" data-action="number" data-value="8">8</button>
+      <button type="button" class="btn number" data-action="number" data-value="9">9</button>
+      <button type="button" class="btn operator" data-action="operator" data-value="*" aria-label="Multiply">*</button>
+      <button type="button" class="btn number" data-action="number" data-value="4">4</button>
+      <button type="button" class="btn number" data-action="number" data-value="5">5</button>
+      <button type="button" class="btn number" data-action="number" data-value="6">6</button>
+      <button type="button" class="btn operator" data-action="operator" data-value="+">+</button>
+      <button type="button" class="btn number" data-action="number" data-value="1">1</button>
+      <button type="button" class="btn number" data-action="number" data-value="2">2</button>
+      <button type="button" class="btn number" data-action="number" data-value="3">3</button>
+      <button type="button" class="btn operator" data-action="operator" data-value="-">-</button>
+      <button type="button" class="btn number" data-action="number" data-value="00">00</button>
+      <button type="button" class="btn number" data-action="number" data-value="0">0</button>
+      <button type="button" class="btn number" data-action="number" data-value=".">.</button>
+      <button type="button" class="btn equals" data-action="equals">=</button>
     </div>
-    <script src="calculator.js"></script>
-  </body>
+  </main>
+  <script src="calculator.js"></script>
+</body>
 </html>

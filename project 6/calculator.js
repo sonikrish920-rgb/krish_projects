@@ -1,130 +1,170 @@
 const display = document.getElementById('display');
-let currentInput = '';
-let previousInput = '';
-let operator = '';
-let expression = '';
+const buttons = document.querySelector('.buttons');
+let currentInput = '0';
+let storedValue = null;
+let pendingOperator = null;
+let waitingForOperand = false;
+let hasError = false;
 
 function updateDisplay() {
-    display.textContent = expression || '0';
+    if (pendingOperator && storedValue !== null) {
+        const operatorSymbol = { '*': '×', '/': '÷' }[pendingOperator] || pendingOperator;
+        const expression = `${storedValue} ${operatorSymbol}`;
+        display.textContent = waitingForOperand
+            ? expression
+            : `${expression} ${currentInput}`;
+        return;
+    }
+
+    display.textContent = currentInput;
 }
 
-function clear() {
-    currentInput = '';
-    previousInput = '';
-    operator = '';
-    expression = '';
+function reset() {
+    currentInput = '0';
+    storedValue = null;
+    pendingOperator = null;
+    waitingForOperand = false;
+    hasError = false;
+    updateDisplay();
+}
+
+function appendDigit(digit) {
+    if (hasError) {
+        reset();
+    }
+    if (waitingForOperand) {
+        currentInput = digit === '.' ? '0.' : digit;
+        waitingForOperand = false;
+    } else if (digit === '.') {
+        if (!currentInput.includes('.')) {
+            currentInput += '.';
+        }
+    } else if (currentInput === '0') {
+        currentInput = digit;
+    } else {
+        currentInput += digit;
+    }
+    updateDisplay();
+}
+
+function calculate(left, right, operator) {
+    switch (operator) {
+        case '+': return left + right;
+        case '-': return left - right;
+        case '*': return left * right;
+        case '/': return right === 0 ? null : left / right;
+        default: return null;
+    }
+}
+
+function showError(message) {
+    currentInput = message;
+    display.textContent = message;
+    storedValue = null;
+    pendingOperator = null;
+    waitingForOperand = true;
+    hasError = true;
+}
+
+function chooseOperator(operator) {
+    if (hasError) {
+        reset();
+    }
+    const inputValue = Number(currentInput);
+    if (pendingOperator && !waitingForOperand) {
+        const result = calculate(storedValue, inputValue, pendingOperator);
+        if (result === null || !Number.isFinite(result)) {
+            showError('Cannot divide by zero');
+            return;
+        }
+        currentInput = String(result);
+        storedValue = result;
+    } else if (storedValue === null) {
+        storedValue = inputValue;
+    }
+    pendingOperator = operator;
+    waitingForOperand = true;
+    updateDisplay();
+}
+
+function evaluate() {
+    if (hasError || !pendingOperator || waitingForOperand) {
+        return;
+    }
+    const result = calculate(storedValue, Number(currentInput), pendingOperator);
+    if (result === null || !Number.isFinite(result)) {
+        showError('Cannot divide by zero');
+        return;
+    }
+    currentInput = String(result);
+    storedValue = null;
+    pendingOperator = null;
+    waitingForOperand = true;
     updateDisplay();
 }
 
 function deleteLast() {
-    if (currentInput) {
-        currentInput = currentInput.slice(0, -1);
-        expression = expression.slice(0, -1);
+    if (hasError) {
+        reset();
+        return;
     }
-    updateDisplay();
-}
-
-function appendNumber(number) {
-    if (number === '.' && currentInput.includes('.')) return;
-    currentInput += number;
-    expression += number;
-    updateDisplay();
-}
-
-function chooseOperator(op) {
-    if (currentInput === '') return;
-    if (previousInput !== '') {
-        calculate();
+    if (waitingForOperand) {
+        return;
     }
-    operator = op;
-    previousInput = currentInput;
-    expression += ' ' + op + ' ';
-    currentInput = '';
-    updateDisplay();
-}
-
-function calculate() {
-    let result;
-    const prev = parseFloat(previousInput);
-    let current = parseFloat(currentInput);
-    if (isNaN(prev)) return;
-    if (isNaN(current)) {
-        if (previousInput !== '') {
-            current = prev;
-            expression += previousInput;
-        } else {
-            return;
-        }
+    currentInput = currentInput.length > 1 ? currentInput.slice(0, -1) : '0';
+    if (currentInput === '-' || currentInput === '') {
+        currentInput = '0';
     }
-    switch (operator) {
-        case '+':
-            result = prev + current;
-            break;
-        case '-':
-            result = prev - current;
-            break;
-        case '×':
-            result = prev * current;
-            break;
-        case '÷':
-            result = prev / current;
-            break;
-        default:
-            return;
-    }
-    expression = result.toString();
-    currentInput = result.toString();
-    operator = '';
-    previousInput = '';
     updateDisplay();
 }
 
 function toggleSign() {
-    if (currentInput !== '') {
-        const num = parseFloat(currentInput) * -1;
-        currentInput = num.toString();
-        expression = expression.replace(/\d+\.?\d*$/, num.toString());
+    if (hasError) {
+        reset();
+    }
+    if (Number(currentInput) !== 0) {
+        currentInput = String(Number(currentInput) * -1);
         updateDisplay();
     }
 }
 
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const value = button.textContent;
-        if (button.classList.contains('number')) {
-            appendNumber(value);
-        } else if (button.classList.contains('operator')) {
-            if (value === '+/-') {
-                toggleSign();
-            } else {
-                chooseOperator(value);
-            }
-        } else if (button.classList.contains('equals')) {
-            calculate();
-        } else if (button.classList.contains('clear')) {
-            clear();
-        } else if (button.classList.contains('delete')) {
-            deleteLast();
+function handleAction(action, value) {
+    if (action === 'number') {
+        for (const digit of value) {
+            appendDigit(digit);
         }
-    });
+    } else if (action === 'operator') {
+        chooseOperator(value);
+    } else if (action === 'equals') {
+        evaluate();
+    } else if (action === 'delete') {
+        deleteLast();
+    } else if (action === 'sign') {
+        toggleSign();
+    } else if (action === 'clear') {
+        reset();
+    }
+}
+
+buttons.addEventListener('click', event => {
+    const button = event.target.closest('button[data-action]');
+    if (button) {
+        handleAction(button.dataset.action, button.dataset.value || '');
+    }
 });
 
-// Keyboard support
-document.addEventListener('keydown', (e) => {
-    if (e.key >= '0' && e.key <= '9') {
-        appendNumber(e.key);
-    } else if (e.key === '.') {
-        appendNumber('.');
-    } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
-        let op = e.key;
-        if (op === '*') op = '×';
-        if (op === '/') op = '÷';
-        chooseOperator(op);
-    } else if (e.key === 'Enter' || e.key === '=') {
-        calculate();
-    } else if (e.key === 'Backspace') {
+document.addEventListener('keydown', event => {
+    if (/^[0-9.]$/.test(event.key)) {
+        appendDigit(event.key);
+    } else if (['+', '-', '*', '/'].includes(event.key)) {
+        chooseOperator(event.key);
+    } else if (event.key === 'Enter' || event.key === '=') {
+        event.preventDefault();
+        evaluate();
+    } else if (event.key === 'Backspace') {
+        event.preventDefault();
         deleteLast();
-    } else if (e.key === 'Escape') {
-        clear();
+    } else if (event.key === 'Escape') {
+        reset();
     }
 });
