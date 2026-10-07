@@ -13,20 +13,25 @@
         body{
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 40px;
+            min-height: 100vh;
+            margin: 0;
+            padding: clamp(16px, 5vw, 40px);
             background-image: url("bg.jpg");
             background-repeat: no-repeat;
             background-size: cover;
+            background-position: center;
+            box-sizing: border-box;
         }
         h1{
             color: #333;
         }
         .links a{
             display: block;
+            box-sizing: border-box;
             background: #1E40AF;
             padding: 15px;
             margin: 20px auto;
-            width: 250px;
+            width: min(100%, 280px);
             color: #ffffff;
             text-decoration: none;
             border-radius: 8px;
@@ -42,19 +47,18 @@
 
     <h1>My Projects</h1>
 
-    <div class="links">
+    <nav class="links" aria-label="Projects">
         <a href="project 1/jokes.html">Project 1 - Random Jokes</a>
         <a href="project 2/diwalispecial.html">Project 2 - Diwali Special</a>
         <a href="project 3/index.html">Project 3 - Note Website</a>
-        <a href="project 4/index.html">Project 4 - Working job</a>
+        <a href="project 4/index.html">Project 4 - Ask Her Out</a>
         <a href="project 5/index.html">Project 5 - Decision Helper</a>
         <a href="project 6/calculator.html">Project 6 - Calculator</a>
         <a href="Login Page/index.html">Project 7 - Login Page</a>
-         
-    </div>
+        <a href="project 8/index.html">Project 8 - Chess</a>
+    </nav>
 </body>
 </html>
-
 
 
 

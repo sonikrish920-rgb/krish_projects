@@ -1,49 +1,52 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login & Signup</title><!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login and Sign Up Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body><!-- LOGIN FORM -->
-<div class="card" id="login-form">
-    <h2>Login</h2>
+<body>
+  <main>
+    <section class="card" id="login-form" aria-labelledby="login-heading">
+      <h1 id="login-heading">Login</h1>
+      <form id="login">
+        <label for="login-identity">Email or username</label>
+        <input id="login-identity" name="identity" type="text" autocomplete="username" required>
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        <label class="remember" for="remember">
+          <input id="remember" name="remember" type="checkbox">
+          Remember me
+        </label>
+        <button class="btn" type="submit">Login</button>
+      </form>
+      <p class="form-footer">
+        <button class="link-button" type="button" data-show="signup-form">Don't have an account? Sign up</button>
+      </p>
+    </section>
 
-    <input type="text" placeholder="Email or Username" />
-    <input type="password" placeholder="Password" />
-
-    <div class="remember">
-        <input type="checkbox" /> Remember Me
-    </div>
-
-    <a href="#" style="color:#2575fc; font-size:14px;">Forgot Password?</a>
-
-    <button class="btn">Login</button>
-
-    <div class="form-footer">
-        <a href="#" onclick="showSignup()">Don't have an account? Sign up</a>
-    </div>
-</div>
-
-<!-- SIGNUP FORM -->
-<div class="card" id="signup-form">
-    <h2>Create Account</h2>
-
-    <input type="text" placeholder="Full Name" />
-    <input type="email" placeholder="Email Address" />
-    <input type="password" placeholder="Create Password" />
-    <input type="password" placeholder="Confirm Password" />
-
-    <button class="btn">Create Account</button>
-
-    <div class="form-footer">
-        <a href="#" onclick="showLogin()">Already have an account? Login here</a>
-    </div>
-</div>
-
-
-<script src="script.js"> </script>
-
+    <section class="card" id="signup-form" aria-labelledby="signup-heading" hidden>
+      <h1 id="signup-heading">Create account</h1>
+      <form id="signup">
+        <label for="signup-name">Full name</label>
+        <input id="signup-name" name="name" type="text" autocomplete="name" required>
+        <label for="signup-email">Email address</label>
+        <input id="signup-email" name="email" type="email" autocomplete="email" required>
+        <label for="signup-password">Create password</label>
+        <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <label for="confirm-password">Confirm password</label>
+        <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="btn" type="submit">Create account</button>
+      </form>
+      <p class="form-footer">
+        <button class="link-button" type="button" data-show="login-form">Already have an account? Login</button>
+      </p>
+    </section>
+    <p id="form-status" role="status" aria-live="polite"></p>
+    <p class="demo-notice">Interface demo only. No credentials are sent or saved.</p>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>

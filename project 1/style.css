@@ -10,7 +10,7 @@ body{
 }
 
 .wrapper{
-    width: 500px;
+    width: min(500px, calc(100% - 32px));
     padding: 50px 40px;
     background-color: #15161a;
     position: absolute;
@@ -51,5 +51,12 @@ button{
     margin: 0 auto;
     border-radius: 5px;
     cursor: pointer;
-    outline: none;
+}
+button:disabled{
+    cursor: wait;
+    opacity: 0.7;
+}
+button:focus-visible{
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
 }

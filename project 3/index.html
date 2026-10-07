@@ -21,26 +21,30 @@
 
 <section class="hero" id="home">
   <h1>Personal Notes Website</h1>
-  <p>Simple • Responsive • Functional</p>
+  <p>Simple, responsive, and practical.</p>
 </section>
 
 <section class="section" id="notes">
   <h2>My Notes</h2>
   <div class="notes-grid" id="notesContainer"></div>
+  <p id="noteStatus" role="status" aria-live="polite"></p>
 </section>
 
 <section class="section" id="add">
   <h2>Add New Note</h2>
   <form id="noteForm">
+    <label for="title">Note title</label>
     <input type="text" id="title" placeholder="Note Title" required />
+    <label for="content">Note content</label>
     <textarea id="content" placeholder="Note Content" required></textarea>
     <button type="submit">Save Note</button>
   </form>
 </section>
 
 <footer>
-  <p>© 2025 My Notes</p>
+  <p>&copy; <span id="year"></span> My Notes</p>
 </footer>
 <script src="note.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

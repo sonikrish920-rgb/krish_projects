@@ -1,27 +1,58 @@
-document.getElementById("decisionForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const question = document.getElementById("question").value;
-  const optionA = document.getElementById("optionA").value;
-  const optionB = document.getElementById("optionB").value;
+const decisionForm = document.getElementById("decisionForm");
+const results = document.getElementById("results");
+const finalResult = document.getElementById("finalResult");
+const scoreStatus = document.getElementById("scoreStatus");
+const decisionFields = ["question", "optionA", "optionB"].map(id => document.getElementById(id));
 
-  document.getElementById("displayOptions").textContent = `${optionA} vs ${optionB}`;
-  document.getElementById("results").classList.remove("hidden");
+decisionFields.forEach(field => {
+  field.addEventListener("input", () => field.setCustomValidity(""));
 });
 
-document.getElementById("scoreBtn").addEventListener("click", function() {
-  const answers = [document.getElementById("q1").value, document.getElementById("q2").value, document.getElementById("q3").value];
-  let scoreA = answers.filter(a => a === "A").length;
-  let scoreB = answers.filter(a => a === "B").length;
-
-  const result = document.getElementById("finalResult");
-  result.textContent = scoreA > scoreB ? "Option A seems better!" :
-                       scoreB > scoreA ? "Option B seems better!" :
-                       "It's a tie! Consider your priorities.";
-  result.classList.remove("hidden");
+decisionForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const blankField = decisionFields.find(field => field.value.trim() === "");
+  if (blankField) {
+    blankField.setCustomValidity("Enter at least one non-space character.");
+    blankField.reportValidity();
+    return;
+  }
+  document.getElementById("displayQuestion").textContent =
+    document.getElementById("question").value.trim();
+  document.getElementById("displayOptions").textContent =
+    `${document.getElementById("optionA").value.trim()} vs. ${document.getElementById("optionB").value.trim()}`;
+  results.classList.remove("hidden");
+  finalResult.classList.add("hidden");
+  scoreStatus.textContent = "";
 });
 
-document.getElementById("resetBtn").addEventListener("click", function() {
-  document.getElementById("decisionForm").reset();
-  document.getElementById("results").classList.add("hidden");
-  document.getElementById("finalResult").classList.add("hidden");
+document.getElementById("scoreBtn").addEventListener("click", () => {
+  const answers = ["q1", "q2", "q3"].map(id => document.getElementById(id).value);
+  if (answers.some(answer => answer === "")) {
+    finalResult.classList.add("hidden");
+    scoreStatus.textContent = "Choose an option for all three questions before calculating.";
+    return;
+  }
+
+  const scoreA = answers.filter(answer => answer === "A").length;
+  const scoreB = answers.length - scoreA;
+  const optionA = document.getElementById("optionA").value.trim();
+  const optionB = document.getElementById("optionB").value.trim();
+
+  finalResult.textContent = scoreA > scoreB
+    ? `${optionA} scores higher (${scoreA} to ${scoreB}).`
+    : scoreB > scoreA
+      ? `${optionB} scores higher (${scoreB} to ${scoreA}).`
+      : "The options are tied. Consider which priorities matter most to you.";
+  scoreStatus.textContent = "";
+  finalResult.classList.remove("hidden");
+});
+
+decisionForm.addEventListener("reset", () => {
+  decisionFields.forEach(field => field.setCustomValidity(""));
+  results.classList.add("hidden");
+  finalResult.classList.add("hidden");
+  scoreStatus.textContent = "";
+  ["q1", "q2", "q3"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
 });
